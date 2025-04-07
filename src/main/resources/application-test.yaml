@@ -2,6 +2,7 @@ spring:
   config:
     activate:
       on-profile: test
+    import: application-secret.properties
 
 jwt:
   jwk:
