@@ -1,10 +1,11 @@
 package sopt.makers.jwt.verifier.code.jwk;
 
-import static lombok.AccessLevel.*;
+import static lombok.AccessLevel.PRIVATE;
 
-import lombok.*;
-import org.springframework.http.*;
-import sopt.makers.jwt.verifier.code.base.*;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import sopt.makers.jwt.verifier.code.base.FailureCode;
 
 @Getter
 @RequiredArgsConstructor(access = PRIVATE)
