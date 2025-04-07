@@ -1,6 +1,6 @@
 package sopt.makers.jwt.verifier.exception;
 
-import sopt.makers.jwt.verifier.code.base.*;
+import sopt.makers.jwt.verifier.code.base.FailureCode;
 
 public abstract class BaseException extends RuntimeException {
 
