@@ -2,6 +2,7 @@ spring:
   config:
     activate:
       on-profile: dev
+    import: application-secret.properties
 
 jwt:
   jwk:
