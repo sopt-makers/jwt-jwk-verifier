@@ -1,0 +1,9 @@
+spring:
+  config:
+    activate:
+      on-profile: prod
+
+jwt:
+  jwk:
+    url: ${PROD_MAKERS_AUTH_JWK_URL}
+    key-id: ${MAKERS_AUTH_JWK_KEY_ID}
