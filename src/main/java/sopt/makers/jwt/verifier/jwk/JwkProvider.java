@@ -25,7 +25,7 @@ public class JwkProvider {
     private final String jwkUrl;
     private final Cache<String, PublicKey> keyCache;
 
-    public JwkProvider(@Value("${jwt.jwk-url}") String jwkUrl) {
+    public JwkProvider(@Value("${jwt.jwk.url}") String jwkUrl) {
         this.jwkUrl = jwkUrl;
         this.keyCache = Caffeine.newBuilder()
                 .maximumSize(20)
