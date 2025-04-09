@@ -1,4 +1,4 @@
-package sopt.makers.jwt.verifier.jwk;
+package sopt.makers.jwt.verifier.infrastructure;
 
 import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
