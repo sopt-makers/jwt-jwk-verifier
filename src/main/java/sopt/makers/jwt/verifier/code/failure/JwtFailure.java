@@ -1,4 +1,4 @@
-package sopt.makers.jwt.verifier.code;
+package sopt.makers.jwt.verifier.code.failure;
 
 import static lombok.AccessLevel.*;
 
