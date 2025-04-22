@@ -1,4 +1,4 @@
-package sopt.makers.jwt.verifier.infrastructure;
+package sopt.makers.jwt.verifier.application;
 
 import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
@@ -12,7 +12,9 @@ import java.text.ParseException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import sopt.makers.jwt.verifier.code.failure.JwkFailure;
+import sopt.makers.jwt.verifier.exception.ClientException;
 import sopt.makers.jwt.verifier.exception.JwkException;
+import sopt.makers.jwt.verifier.infrastructure.AuthClient;
 
 import java.security.PublicKey;
 import java.time.Duration;
@@ -47,7 +49,7 @@ public class JwkProvider {
             JWKSet jwkSet = loadJwkSet();
             JWK jwk = findJwkByKeyId(jwkSet, kid);
             return convertToPublicKey(jwk);
-        } catch (JwkException e) {
+        } catch (JwkException | ClientException e) {
             throw e;
         } catch (RuntimeException | IOException | ParseException e) {
             log.error(e.getMessage());
@@ -55,7 +57,7 @@ public class JwkProvider {
         }
     }
 
-    private JWKSet loadJwkSet() throws IOException, ParseException {
+    private JWKSet loadJwkSet() throws IOException, ParseException, ClientException {
         String json = authClient.getJwk();
         return JWKSet.parse(json);
     }

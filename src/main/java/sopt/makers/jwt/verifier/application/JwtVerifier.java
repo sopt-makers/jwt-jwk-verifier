@@ -17,7 +17,6 @@ import java.text.ParseException;
 import sopt.makers.jwt.verifier.code.failure.JwtFailure;
 import sopt.makers.jwt.verifier.exception.JwtException;
 import sopt.makers.jwt.verifier.exception.JwkException;
-import sopt.makers.jwt.verifier.infrastructure.JwkProvider;
 
 @Slf4j
 @Component
