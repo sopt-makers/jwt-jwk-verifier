@@ -7,11 +7,9 @@ import com.nimbusds.jose.jwk.JWK;
 import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;
 import java.io.IOException;
-import java.net.URL;
 import java.security.interfaces.RSAPublicKey;
 import java.text.ParseException;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import sopt.makers.jwt.verifier.code.failure.JwkFailure;
 import sopt.makers.jwt.verifier.exception.JwkException;
@@ -22,15 +20,16 @@ import java.time.Duration;
 @Slf4j
 @Component
 public class JwkProvider {
-    private final String jwkUrl;
-    private final Cache<String, PublicKey> keyCache;
 
-    public JwkProvider(@Value("${jwt.jwk.url}") String jwkUrl) {
-        this.jwkUrl = jwkUrl;
+    private final Cache<String, PublicKey> keyCache;
+    private final AuthClient authClient;
+
+    public JwkProvider(AuthClient authClient) {
         this.keyCache = Caffeine.newBuilder()
                 .maximumSize(20)
                 .expireAfterWrite(Duration.ofDays(1))
                 .build();
+        this.authClient = authClient;
     }
 
     /**
@@ -57,7 +56,8 @@ public class JwkProvider {
     }
 
     private JWKSet loadJwkSet() throws IOException, ParseException {
-        return JWKSet.load(new URL(jwkUrl));
+        String json = authClient.getJwk();
+        return JWKSet.parse(json);
     }
 
     private JWK findJwkByKeyId(JWKSet jwkSet, String kid) {
