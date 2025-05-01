@@ -21,17 +21,10 @@ import sopt.makers.jwt.verifier.exception.JwtException;
 import sopt.makers.jwt.verifier.exception.JwkException;
 import sopt.makers.jwt.verifier.security.authentication.MakersAuthentication;
 
-/**
- * JWT 서명 및 클레임 검증을 담당하는 컴포넌트.
- * <p>
- * - 인증 서버로부터 발급된 JWT를 입력받아 서명 유효성, 만료 시간, 발급자 등을 검증합니다.
- * - 검증에 성공하면 해당 JWT로부터 사용자 정보를 파싱하여 {@link MakersAuthentication}을 생성합니다.
- * - 실패 시 JWK 캐시를 무효화하고 한 번 더 재검증을 시도합니다.
- */
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class JwtVerifier {
+public class JwtAuthenticationService {
 
     private final JwkProvider jwkProvider;
     private static final String ROLES = "roles";
@@ -41,8 +34,7 @@ public class JwtVerifier {
 
     /**
      * JWT 토큰을 검증하고, 사용자 인증 정보를 반환합니다.
-     *
-     * <p>내부 동작 순서:
+     * 내부 동작 순서:
      * 1. JWT 파싱 (header에서 kid 추출)
      * 2. JWK Provider에서 공개키 조회
      * 3. verifyWithRetry를 통해 서명 및 클레임 검증 (재시도 포함)
@@ -52,7 +44,7 @@ public class JwtVerifier {
      * @return 인증 정보 객체
      * @throws JwtException 서명 검증 실패, 파싱 실패, 키 조회 실패 등의 경우
      */
-    public MakersAuthentication verifyAndParse(String token) {
+    public MakersAuthentication authenticate(String token) {
         try {
             SignedJWT jwt = SignedJWT.parse(token);
             String kid = jwt.getHeader().getKeyID();
@@ -101,12 +93,10 @@ public class JwtVerifier {
     /**
      * JWT 서명 검증 실패 시 캐시된 공개키를 무효화하고,
      * 인증 서버에서 공개키를 다시 가져와 재검증을 시도하는 로직입니다.
-     *
-     * <p>이 로직은 다음과 같은 상황을 대비합니다:
+     * 이 로직은 다음과 같은 상황에 실행됩니다:
      * - JWK 캐시가 만료되었거나,
      * - 키 롤링(갱신) 등으로 인해 기존 키로는 서명 검증이 실패하는 경우
-     *
-     * <p>동작 순서:
+     * 동작 순서:
      * 1. 기존 키로 검증 시도 → 실패
      * 2. 캐시 무효화 → JWK 재요청
      * 3. 새 키로 검증 재시도
