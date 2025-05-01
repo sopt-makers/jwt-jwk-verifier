@@ -1,0 +1,66 @@
+package sopt.makers.jwt.verifier.security.authentication;
+
+import lombok.Getter;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+
+import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
+
+@Getter
+public class MakersAuthentication implements Authentication {
+
+    private final String userId;
+    private final List<GrantedAuthority> authorities;
+    private boolean authenticated;
+
+    public MakersAuthentication(String userId, List<String> roles) {
+        this.userId = userId;
+        this.authorities = roles.stream()
+                .map(SimpleGrantedAuthority::new)
+                .collect(Collectors.toList());
+    }
+
+    public List<String> getRoles() {
+        return authorities.stream()
+                .map(GrantedAuthority::getAuthority)
+                .toList();
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return authorities;
+    }
+
+    @Override
+    public Object getCredentials() {
+        return null; // JWT 기반 인증이라 자격 증명 X
+    }
+
+    @Override
+    public Object getDetails() {
+        return null;
+    }
+
+    @Override
+    public Object getPrincipal() {
+        return userId;
+    }
+
+    @Override
+    public boolean isAuthenticated() {
+        return true;
+    }
+
+    @Override
+    public void setAuthenticated(boolean authenticated) throws IllegalArgumentException {
+        this.authenticated = authenticated;
+    }
+
+    @Override
+    public String getName() {
+        return userId;
+    }
+}
