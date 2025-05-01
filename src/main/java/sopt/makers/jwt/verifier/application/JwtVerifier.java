@@ -28,14 +28,12 @@ public class JwtVerifier {
     @Value("${jwt.jwk.issuer}")
     private String issuer;
 
-    public String extractSubject(String token) {
+    public JWTClaimsSet extractClaims(String token) {
         try {
             SignedJWT jwt = SignedJWT.parse(token);
             String kid = jwt.getHeader().getKeyID();
             PublicKey key = jwkProvider.getPublicKey(kid);
-            JWTClaimsSet claims = verifyWithRetry(jwt, kid, key);
-
-            return claims.getSubject();
+            return verifyWithRetry(jwt, kid, key);
         } catch (ParseException e) {
             log.warn("JWT parsing failed: {}", e.getMessage());
             throw new JwtException(JwtFailure.JWT_PARSE_FAILED);
