@@ -1,4 +1,4 @@
-package sopt.makers.jwt.verifier.config.property;
+package sopt.makers.jwt.verifier.external.auth;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 

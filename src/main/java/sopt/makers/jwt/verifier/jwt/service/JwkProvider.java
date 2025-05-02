@@ -1,4 +1,4 @@
-package sopt.makers.jwt.verifier.application;
+package sopt.makers.jwt.verifier.jwt.service;
 
 import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
@@ -11,10 +11,10 @@ import java.security.interfaces.RSAPublicKey;
 import java.text.ParseException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-import sopt.makers.jwt.verifier.code.failure.JwkFailure;
-import sopt.makers.jwt.verifier.exception.ClientException;
-import sopt.makers.jwt.verifier.exception.JwkException;
-import sopt.makers.jwt.verifier.infrastructure.AuthClient;
+import sopt.makers.jwt.verifier.jwt.code.JwkFailure;
+import sopt.makers.jwt.verifier.external.exception.ClientException;
+import sopt.makers.jwt.verifier.jwt.exception.JwkException;
+import sopt.makers.jwt.verifier.external.auth.AuthClient;
 
 import java.security.PublicKey;
 import java.time.Duration;

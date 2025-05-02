@@ -1,4 +1,4 @@
-package sopt.makers.jwt.verifier.config;
+package sopt.makers.jwt.verifier.external.auth;
 
 import io.netty.channel.ChannelOption;
 import io.netty.handler.timeout.ReadTimeoutHandler;
@@ -10,12 +10,12 @@ import org.springframework.http.MediaType;
 import org.springframework.http.client.reactive.ReactorClientHttpConnector;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.netty.http.client.HttpClient;
-import sopt.makers.jwt.verifier.config.property.AuthClientProperty;
+import sopt.makers.jwt.verifier.external.auth.AuthClientProperty;
 
 import java.time.Duration;
 
 @Configuration
-public class WebClientConfig {
+public class AuthWebClientConfig {
 
     public static final String HEADER_API_KEY = "X-Api-Key";
     public static final String HEADER_SERVICE_NAME = "X-Service-Name";

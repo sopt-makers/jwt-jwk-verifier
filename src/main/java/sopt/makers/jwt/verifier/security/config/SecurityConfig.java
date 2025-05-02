@@ -1,4 +1,4 @@
-package sopt.makers.jwt.verifier.config;
+package sopt.makers.jwt.verifier.security.config;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;

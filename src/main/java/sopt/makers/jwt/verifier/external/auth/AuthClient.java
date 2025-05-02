@@ -1,13 +1,12 @@
-package sopt.makers.jwt.verifier.infrastructure;
+package sopt.makers.jwt.verifier.external.auth;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
-import sopt.makers.jwt.verifier.code.failure.ClientFailure;
-import sopt.makers.jwt.verifier.config.property.AuthClientProperty;
-import sopt.makers.jwt.verifier.exception.ClientException;
+import sopt.makers.jwt.verifier.external.code.ClientFailure;
+import sopt.makers.jwt.verifier.external.exception.ClientException;
 
 @Slf4j
 @Component

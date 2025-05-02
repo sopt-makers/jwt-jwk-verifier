@@ -1,4 +1,4 @@
-package sopt.makers.jwt.verifier.code.failure;
+package sopt.makers.jwt.verifier.external.code;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

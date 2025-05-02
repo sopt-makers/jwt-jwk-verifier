@@ -1,4 +1,4 @@
-package sopt.makers.jwt.verifier.application;
+package sopt.makers.jwt.verifier.jwt.service;
 
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.crypto.RSASSAVerifier;
@@ -16,9 +16,9 @@ import java.security.PublicKey;
 import java.text.ParseException;
 import java.util.List;
 
-import sopt.makers.jwt.verifier.code.failure.JwtFailure;
-import sopt.makers.jwt.verifier.exception.JwtException;
-import sopt.makers.jwt.verifier.exception.JwkException;
+import sopt.makers.jwt.verifier.jwt.code.JwtFailure;
+import sopt.makers.jwt.verifier.jwt.exception.JwtException;
+import sopt.makers.jwt.verifier.jwt.exception.JwkException;
 import sopt.makers.jwt.verifier.security.authentication.MakersAuthentication;
 
 @Slf4j
