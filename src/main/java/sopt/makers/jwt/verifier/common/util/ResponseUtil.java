@@ -1,11 +1,11 @@
-package sopt.makers.jwt.verifier.util;
+package sopt.makers.jwt.verifier.common.util;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import sopt.makers.jwt.verifier.api.BaseResponse;
+import sopt.makers.jwt.verifier.common.response.BaseResponse;
 import sopt.makers.jwt.verifier.code.base.FailureCode;
 import sopt.makers.jwt.verifier.code.base.SuccessCode;
 import sopt.makers.jwt.verifier.exception.BaseException;

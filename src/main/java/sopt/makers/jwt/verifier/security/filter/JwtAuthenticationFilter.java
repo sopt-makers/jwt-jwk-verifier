@@ -10,7 +10,7 @@ import org.springframework.lang.NonNull;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
-import sopt.makers.jwt.verifier.application.JwtAuthenticationService;
+import sopt.makers.jwt.verifier.jwt.service.JwtAuthenticationService;
 import sopt.makers.jwt.verifier.security.authentication.MakersAuthentication;
 
 import java.io.IOException;
