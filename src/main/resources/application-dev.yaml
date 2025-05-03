@@ -6,7 +6,6 @@ spring:
 
 jwt:
   jwk:
-    key-id: ${MAKERS_AUTH_JWK_KEY_ID}
     issuer: ${MAKERS_AUTH_JWK_ISSUER}
 
 external:
