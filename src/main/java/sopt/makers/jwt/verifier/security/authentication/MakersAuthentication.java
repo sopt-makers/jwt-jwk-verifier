@@ -14,7 +14,7 @@ public class MakersAuthentication implements Authentication {
 
     private final String userId;
     private final List<GrantedAuthority> authorities;
-    private boolean authenticated;
+    private boolean authenticated = false;
 
     public MakersAuthentication(String userId, List<String> roles) {
         this.userId = userId;
@@ -51,7 +51,7 @@ public class MakersAuthentication implements Authentication {
 
     @Override
     public boolean isAuthenticated() {
-        return true;
+        return authenticated;
     }
 
     @Override
