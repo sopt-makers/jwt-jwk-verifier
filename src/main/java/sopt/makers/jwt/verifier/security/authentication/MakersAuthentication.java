@@ -19,8 +19,8 @@ public class MakersAuthentication implements Authentication {
     public MakersAuthentication(String userId, List<String> roles) {
         this.userId = userId;
         this.authorities = roles.stream()
-                .map(SimpleGrantedAuthority::new)
-                .collect(Collectors.toList());
+                .map(role -> (GrantedAuthority) new SimpleGrantedAuthority(role))
+                .toList();
     }
 
     public List<String> getRoles() {
