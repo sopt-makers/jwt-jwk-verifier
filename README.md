@@ -136,12 +136,12 @@ OUR_SERVICE_NAME={각 팀 서비스 이름}
 cd ../../../
 ```
 
-3. 프로젝트 빌드
+4. 프로젝트 빌드
 ```bash
 ./gradlew build
 ```
 
-4. 애플리케이션 실행
+5. 애플리케이션 실행
 ```bash
 ./gradlew bootRun
 ```
