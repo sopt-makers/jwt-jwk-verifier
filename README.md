@@ -4,8 +4,9 @@
 
 ## summary
 
-JWT(JSON Web Token)와 JWK(JSON Web Key)를 검증하는 Spring Boot 기반의 서비스입니다.
-모든 SOPT Makers 리소스 서버의 JWT 검증 공통과 표준화된 인증 흐름을 지원하기 위해 설계되었습니다.
+해당 프로젝트는 모든 서비스(playground, crew, admin, app)의 인증 로직을 공통화하기 위해 설계되었으며,
+SOPT Makers 내 리소스 서버는 해당 프로젝트를 기반으로 JWT 인증을 처리해야 합니다.
+각 서비스는 본 프로젝트를 참고하여 각 서비스의 인증 흐름에 맞게 통합하여 사용할 수 있습니다.
 
 ## intro
 
@@ -30,6 +31,20 @@ Spring Security와 Nimbus JOSE JWT 라이브러리를 사용하여 구현되었�
 - Nimbus JOSE JWT 9.37.3
 - Caffeine 3.1.8 (캐싱)
 - Lombok
+
+##  JWT / JWK 개요
+### 🔐 JWT (JSON Web Token)
+- 사용자 인증 정보를 인코딩한 토큰
+- 세 부분으로 구성: header.payload.signature
+- 클라이언트는 로그인 후 발급받은 JWT를 Authorization: Bearer {token} 형식으로 서버에 전달
+- 서버는 이 토큰의 서명 검증과 만료 여부 확인을 통해 사용자를 인증
+
+### 🔑 JWK (JSON Web Key)
+- JWT의 서명을 검증하기 위한 공개키 집합 형식
+- 인증 서버는 kid(Key ID)를 기준으로 특정 RSA 공개키를 JWK Set 형태로 제공합니다
+- 리소스 서버(playground, crew, admin, app)는 이 JWK를 참조해 JWT 서명을 검증함으로써 인증 서버와의 신뢰 관계를 유지할 수 있습니다
+
+> ✅ 이 프로젝트에서는 인증 서버가 발급한 JWT의 kid 값을 기반으로 해당 공개키를 가져와 JWT의 서명을 검증합니다. 공개키는 Caffeine으로 캐싱되어 성능을 보장하고, 실패 시 한 번 재시도합니다.
 
 ## 프로젝트 구조
 
@@ -101,7 +116,7 @@ Spring Security와 Nimbus JOSE JWT 라이브러리를 사용하여 구현되었�
 ## 리소스 서버(playground, crew, app, admin) 인증 흐름
 
 1. 클라이언트가 `Authorization: Bearer {accessToken}` 헤더로 요청
-2. `JwtAuthenticationFilter`가 토큰을 추출 및 검증
+2. JwtAuthenticationFilter가 토큰을 추출하고, JwtAuthenticationService를 통해 인증서버(JWK 서버)에서 공개키를 조회한 뒤 JWT의 서명을 검증하고 유효성을 확인
 3. 유효한 토큰이면 `MakersAuthentication`을 생성하여 `SecurityContext`에 등록
 4. 컨트롤러에서는 `@AuthenticationPrincipal`을 통해 인증 정보 접근 가능
 
