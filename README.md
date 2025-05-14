@@ -1,6 +1,6 @@
 # 🔐 JWT JWK Verifier
-> last update: 2025-05-12<br>
-> author: 김성은 ([@sung-silver](https://github.com/sung-silver), SOPT makers platform team backend developer)
+> last update: 2025-05-15<br>
+> author: 김성은 ([@sung-silver](https://github.com/sung-silver), SOPT makers 36th platform team backend developer)
 
 ## summary
 
@@ -34,17 +34,17 @@ Spring Security와 Nimbus JOSE JWT 라이브러리를 사용하여 구현되었�
 
 ##  JWT / JWK 개요
 ### 🔐 JWT (JSON Web Token)
-- 사용자 인증 정보를 인코딩한 토큰
-- 세 부분으로 구성: header.payload.signature
-- 클라이언트는 로그인 후 발급받은 JWT를 Authorization: Bearer {token} 형식으로 서버에 전달
-- 서버는 이 토큰의 서명 검증과 만료 여부 확인을 통해 사용자를 인증
+- 사용자 인증 정보를 인코딩한 토큰입니다
+- header.payload.signature으로 구성되어 있습니다
+- 클라이언트는 로그인 후 발급받은 JWT를 `Authorization: Bearer {token}` 형식으로 서버에 전달합니다
+- 서버는 이 토큰의 서명 검증과 만료 여부 확인을 통해 사용자를 인증합니다
 
 ### 🔑 JWK (JSON Web Key)
-- JWT의 서명을 검증하기 위한 공개키 집합 형식
-- 인증 서버는 kid(Key ID)를 기준으로 특정 RSA 공개키를 JWK Set 형태로 제공합니다
+- JWT의 서명을 검증하기 위한 공개키 집합 형식입니다
+- 인증 서버는 `kid(Key ID)`를 기준으로 특정 RSA 공개키를 JWK Set 형태로 제공합니다
 - 리소스 서버(playground, crew, admin, app)는 이 JWK를 참조해 JWT 서명을 검증함으로써 인증 서버와의 신뢰 관계를 유지할 수 있습니다
 
-> ✅ 이 프로젝트에서는 인증 서버가 발급한 JWT의 kid 값을 기반으로 해당 공개키를 가져와 JWT의 서명을 검증합니다. 공개키는 Caffeine으로 캐싱되어 성능을 보장하고, 실패 시 한 번 재시도합니다.
+> ✅ 이 프로젝트에서는 인증 서버가 발급한 JWT의 kid 값을 기반으로 해당 공개키를 가져와 JWT의 서명을 검증합니다. 공개키는 Caffeine으로 캐싱되어 성능을 보장하고, 실패 시 공개키 조회를 재시도(1회)합니다
 
 ## 프로젝트 구조
 
@@ -140,16 +140,16 @@ vim application-secret.properties
 
 ```bash
 MAKERS_AUTH_JWK_ENDPOINT={공개키 조회 경로}
-# makers 외부 서비스(crew, playground 등)에서는 인증 서버로 직접 요청을 보내지 않도록 하기 위해 분리된 환경변수로 관리합니다.
+# makers 외부 서비스(crew, playground 등)에서는 인증 서버로 직접 요청을 보내지 않도록 하기 위해 분리된 환경변수로 관리합니다
 
 MAKERS_AUTH_JWK_ISSUER={인증 서버 이름}
-# 토큰의 발급 주체(issuer)를 검증하기 위한 값입니다. JWT의 iss 필드와 일치해야 합니다.
+# 토큰의 발급 주체(issuer)를 검증하기 위한 값입니다. JWT의 iss 필드와 일치해야 합니다
 
 AUTH_API_KEY={각 팀 API 키}
-# 인증 서버와의 통신 시, 요청을 보낸 주체를 식별하기 위한 API Key입니다. 각 서비스별로 고유하게 발급되어야 합니다.
+# 인증 서버와의 통신 시, 요청을 보낸 주체를 식별하기 위한 API Key입니다. 각 서비스별로 고유하게 발급되어야 합니다
 
 OUR_SERVICE_NAME={각 팀 서비스 이름}
-# 인증 실패 시, 어떤 서비스에서 발생했는지 로그 추적 및 디버깅을 위해 요청 헤더에 포함됩니다.
+# 인증 실패 시, 어떤 서비스에서 발생했는지 로그 추적 및 디버깅을 위해 요청 헤더에 포함됩니다
 
 ```
 
